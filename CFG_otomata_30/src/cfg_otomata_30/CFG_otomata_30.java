@@ -51,17 +51,17 @@ public class CFG_otomata_30 {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("------------------CFG MENU-------------------");
-        System.out.println("1)Alfabeyi giriniz:ör.a,b,X");
+        System.out.println("1)Enter the alphabet:ör.a,b,X");
         Scanner scanner=new Scanner(System.in);
-        String alfabe=scanner.nextLine();
-        System.out.println("2)Kuralları Giriniz '|' ve ',' ve '-->' ifadelerini kullanınız :ör. S-->aa|bX|aaX,X-->ab|b");
-        String kurallar=scanner.nextLine();    
-        System.out.println("3)Görüntülemek istediğiniz kelime sayısını giriniz:(tüm kelimeleri görüntülemek için 0 ı  tuşlayın)");
-        int kelime_sayisi=scanner.nextInt();
+        String alphabet=scanner.nextLine();
+        System.out.println("2)Enter the rules like add '|' and ','and  '-->'  :ex. S-->aa|bX|aaX,X-->ab|b");
+        String rules=scanner.nextLine();    
+        System.out.println("3)Enter the number of word you would like to see : (press 0 to see every word combination)");
+        int numWord=scanner.nextInt();
     
 ////         if empty exit 
-        if(kelime_sayisi<0|| alfabe.isEmpty()||kurallar.isEmpty()) {
-            System.out.println("yanlış veya boş giriş yaptınız çıkılıyor.");
+        if(numWord<0|| alphabet.isEmpty()||rules.isEmpty()) {
+            System.out.println("The given format is wrong , exiting..");
             System.exit(0);
         }
         
@@ -70,54 +70,54 @@ public class CFG_otomata_30 {
          
         
 
-        String [] harfler = alfabe.split(",");
+        String [] letters = alphabet.split(",");
 //        int upperCase=0;
-//        for (int i = 0; i < harfler.length; i++) {
+//        for (int i = 0; i < letters.length; i++) {
 //            if (Character.isUpperCase(harfler[i].charAt(i))) upperCase++;
 //        }
         
-        String kuralString=kurallar.replaceAll("-", "").replaceAll(">", "");        
-        String [] kural = kuralString.split(",");
+        String rulesString=rules.replaceAll("-", "").replaceAll(">", "");        
+        String [] rule = ruleString.split(",");
         
-          char[] liste= new char[30];
-            for(int i=0; i<kural.length; i++){
-               liste[i]=(kural[i].charAt(0));
+          char[] list= new char[30];
+            for(int i=0; i<rule.length; i++){
+               list[i]=(rule[i].charAt(0));
             }
                 
             
 
-          String[] kural2= new String[50];
-          String[] temp= new String[kural2.length];
-          String[] temp2= new String[kural2.length];
-          String[] temp3= new String[kural2.length];
-          String[] temp4= new String[kural2.length];
-          String[] temp5= new String[kural2.length];
+          String[] rulenew= new String[50];
+          String[] temp= new String[rulenew.length];
+          String[] temp2= new String[rulenew.length];
+          String[] temp3= new String[rulenew.length];
+          String[] temp4= new String[rulenew.length];
+          String[] temp5= new String[rulenew.length];
           
           boolean f0=false,f2=false,f3=false,f4=false,f5=false;
           
-          ArrayList<String[]> kural3=new ArrayList<>();
+          ArrayList<String[]> ruleArray=new ArrayList<>();
           
-            for (int i = 0; i < kural.length; i++) {
-                kural[i]=kural[i].substring(1);
-                kural2[i]=(java.util.Arrays.toString(kural[i].split("\\|")).replaceAll("[\\[\\](){}]" , "").replaceAll("\\s+","")); 
+            for (int i = 0; i < rule.length; i++) {
+                rule[i]=kural[i].substring(1);
+                rulenew[i]=(java.util.Arrays.toString(rule[i].split("\\|")).replaceAll("[\\[\\](){}]" , "").replaceAll("\\s+","")); 
                 
                 switch(i){
-                    case 0:temp=kural2[i].split(",");
-                        if (kural2[i].contains(liste+"")) {
+                    case 0:temp=rulenew[i].split(",");
+                        if (rulenew[i].contains(list+"")) {
                             f0=true;
                         }
                         break;
-                    case 1:temp2=kural2[i].split(",");
-                        if (kural2[i].contains(liste+"")) f2=true;
+                    case 1:temp2=rulenew[i].split(",");
+                        if (rulenew[i].contains(list+"")) f2=true;
                         break;
-                    case 2:temp3=kural2[i].split(",");
-                        if (kural2[i].contains(liste+"")) f3=true;
+                    case 2:temp3=rulenew[i].split(",");
+                        if (kural2[i].contains(list+"")) f3=true;
                         break;
-                    case 3:temp4=kural2[i].split(",");
-                        if (kural2[i].contains(liste+""))  f4=true;
+                    case 3:temp4=rulenew[i].split(",");
+                        if (kural2[i].contains(list+""))  f4=true;
                         break;
-                    case 4:temp5=kural2[i].split(",");
-                        if (kural2[i].contains(liste+"")) f5=true;
+                    case 4:temp5=rulenew[i].split(",");
+                        if (rulenew[i].contains(list+"")) f5=true;
                         break;
                     default:
                 }
@@ -129,7 +129,7 @@ public class CFG_otomata_30 {
            
 //           s-->ax|bx,x-->a|b
        
-           //kuyruk ağaç yapısı ilk verilerin eklenmesi
+           //adding to tree
            
            for (int i = 0; i < temp.length; i++) {
             tree.add(temp[i]);
@@ -140,66 +140,66 @@ public class CFG_otomata_30 {
            
            
            
-           String yeni,kelime = null;
+           String wordnew,word = null;
            int loop=0;
            while (loop!=500) {
                
-               for (int i = 0; i < liste.length; i++) {//x ve s leri kontrol etmek için
+               for (int i = 0; i < list.length; i++) {//control x and s
                    if(tree.isEmpty()){
-                       System.out.println("emptyyy");break;
+                       System.out.println("empty tree");break;
                    }
                    
-                   if(tree.peek().contains(liste[1]+"")){//x var mı
-                       yeni=tree.removeFirst();
-                         for (int j = 0; j < temp2.length; j++) {//x in kuralları kadar dön ve kelimeyi değiştir                             
+                   if(tree.peek().contains(list[1]+"")){//is there an x
+                       wordnew=tree.removeFirst();
+                         for (int j = 0; j < temp2.length; j++) {//apply x's rules                   
                                    
                                if (f2) {
-                                   kelime=yeni.replaceFirst(liste[1]+"", temp2[j]);
-                                   tree.addLast(kelime);
+                                   word=wordnew.replaceFirst(list[1]+"", temp2[j]);
+                                   tree.addLast(word);
                                 }
                                else{
-                                   kelime=yeni.replaceFirst(liste[1]+"", temp2[j]);
-                                   tree.addLast(kelime);
+                                   word=wordnew.replaceFirst(list[1]+"", temp2[j]);
+                                   tree.addLast(word);
                                }
-//                                   System.outddLast(kelime);
+//                                   System.outddLast(word);
                           }
                    }
-                   else if(tree.peek().contains(liste[0]+"")){//x var mı
-                       yeni=tree.removeFirst();
-                         for (int j = 0; j < temp.length; j++) {//x in kuralları kadar dön ve kelimeyi değiştir
-                                   kelime=yeni.replaceFirst(liste[0]+"", temp[j]);
-                                   tree.addLast(kelime);
-//                                   System.out.println(kelime);
+                   else if(tree.peek().contains(list[0]+"")){//is there an x
+                       wordnew=tree.removeFirst();
+                         for (int j = 0; j < temp.length; j++) {//apply x's rules 
+                                   word=wordnew.replaceFirst(list[0]+"", temp[j]);
+                                   tree.addLast(word);
+//                                   System.out.println(word);
                           }
                    }
-                   else if(tree.peek().contains(liste[2]+"")){//x var mı
-                       yeni=tree.removeFirst();
-                         for (int j = 0; j < temp3.length; j++) {//x in kuralları kadar dön ve kelimeyi değiştir
-                                   kelime=yeni.replaceFirst(liste[2]+"", temp3[j]);
-                                   tree.addLast(kelime);
-//                                   System.out.println(kelime);
+                   else if(tree.peek().contains(list[2]+"")){//is there an x
+                       word=tree.removeFirst();
+                         for (int j = 0; j < temp3.length; j++) {//apply x's rules 
+                                   word=wordnew.replaceFirst(list[2]+"", temp3[j]);
+                                   tree.addLast(word);
+//                                   System.out.println(word);
                           }
                    }
-                   else if(tree.peek().contains(liste[3]+"")){//x var mı
-                       yeni=tree.removeFirst();
-                         for (int j = 0; j < temp4.length; j++) {//x in kuralları kadar dön ve kelimeyi değiştir
-                                   kelime=yeni.replaceFirst(liste[3]+"", temp4[j]);
-                                   tree.addLast(kelime);
-//                                   System.out.println(kelime);
+                   else if(tree.peek().contains(list[3]+"")){//is there an x
+                       wordnew=tree.removeFirst();
+                         for (int j = 0; j < temp4.length; j++) {//apply x's rules
+                                   word=wordnew.replaceFirst(list[3]+"", temp4[j]);
+                                   tree.addLast(word);
+//                                   System.out.println(word);
                           }
                    }
-                    else if(tree.peek().contains(liste[4]+"")){//x var mı
-                       yeni=tree.removeFirst();
-                         for (int j = 0; j < temp4.length; j++) {//x in kuralları kadar dön ve kelimeyi değiştir
-                                   kelime=yeni.replaceFirst(liste[4]+"", temp5[j]);
-                                   tree.addLast(kelime);
-//                                   System.out.println(kelime);
+                    else if(tree.peek().contains(list[4]+"")){//is there an x
+                       wordnew=tree.removeFirst();
+                         for (int j = 0; j < temp4.length; j++) {//apply x's rules
+                                   word=wordnew.replaceFirst(list[4]+"", temp5[j]);
+                                   tree.addLast(word);
+//                                   System.out.println(word);
                           }
                    }
                     
                    else{
-                       kelime=tree.removeFirst();
-                       tree.addLast(kelime);
+                       word=tree.removeFirst();
+                       tree.addLast(word);
                    }
                        
                }
@@ -208,15 +208,15 @@ public class CFG_otomata_30 {
            }
 
 
-                LinkedList<String> toplam= new LinkedList<String>(); 
+                LinkedList<String> addition= new LinkedList<String>(); 
                 boolean flag=true;
                 for (int i = 0; i < tree.size(); i++) {
-                    for (int j = 0; j < toplam.size(); j++) {
-                        if(toplam.get(j).equals(tree.get(i)))
+                    for (int j = 0; j < addition.size(); j++) {
+                        if(addition.get(j).equals(tree.get(i)))
                             flag=false;
                     }
                     if(flag)
-                        toplam.addLast(tree.get(i));
+                        addition.addLast(tree.get(i));
             
                 }
                 
@@ -224,22 +224,22 @@ public class CFG_otomata_30 {
                 
                 
                 
-                System.out.println("---------------KELİMELER--------------");
-                if(kelime_sayisi>toplam.size()){
-                    System.out.println("girdiğiniz kelime sayısı var olandan fazladır lütfen daha küçük (max="+toplam.size()+") bir numara deneyin");
+                System.out.println("---------------WORDS--------------");
+                if(numWord>addition.size()){
+                    System.out.println("please try smaller number than (max="+toplam.size()+")");
                     exit(0);
                 }
-                if(kelime_sayisi<=toplam.size()&& kelime_sayisi!=0){
-                for (int i = 0; i < kelime_sayisi; i++) {     
+                if(numWord<=addition.size()&& numword!=0){
+                for (int i = 0; i < numword; i++) {     
                    
-                  System.out.print((i+1)+")"+toplam.get(i)+" ");
+                  System.out.print((i+1)+")"+addition.get(i)+" ");
                 }
                 }
-                if(kelime_sayisi==0){
+                if(numword==0){
                     
-                    for (int i = 0; i < toplam.size(); i++) {     
+                    for (int i = 0; i < addition.size(); i++) {     
                    
-                  System.out.print((i+1)+")"+toplam.get(i)+" ");
+                  System.out.print((i+1)+")"+addition.get(i)+" ");
                 }
                 }
         
